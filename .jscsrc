@@ -1,0 +1,18 @@
+{
+  "requireMultipleVarDecl": true,
+  "requireCurlyBraces": ["if", "else", "for", "while", "do"],
+  "disallowKeywords": ["with"],
+  "disallowMultipleLineBreaks": true,
+  "validateJSDoc": {
+    "checkParamNames": true,
+    "requireParamTypes": true
+  },
+  "excludeFiles": [
+    "node_modules",
+    "lib-cov",
+    "html-report",
+    "karma.conf.js",
+    "**/.sencha/**",
+    "**/sass/**"
+  ]
+}
