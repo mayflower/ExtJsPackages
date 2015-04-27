@@ -1,0 +1,108 @@
+<html>
+<header>
+    <link rel="stylesheet" href="https://extjs.cachefly.net/ext/gpl/5.1.0/build/packages/ext-theme-crisp/build/resources/ext-theme-crisp-all.css" type="text/css">
+    <script type="text/javascript" src="https://extjs.cachefly.net/ext/gpl/5.1.0/build/ext-all.js"></script>
+    <script type="text/javascript" src="../build/mf-grid-filter-form-debug.js"></script>
+    <script>
+Ext.onReady(function () {
+    var store, columns,
+            testWindow, grid, feature;
+
+    Ext.require('Mayflower.grid.feature.FilterForm');
+
+    store = Ext.create('Ext.data.ArrayStore', {
+        fields: [{name: 'id', type: 'int'}, 'name', 'description'],
+        pageSize: 5,
+        proxy: {
+            type: 'memory',
+            enablePaging: true,
+            reader: {
+                type: 'array'
+            }
+        },
+        data: [
+            [1, 'One', 'First item'],
+            [2, 'Two', 'Second item'],
+            [3, 'Three', 'Third item'],
+            [4, 'Four', 'Fourth item'],
+            [5, 'Five', 'Fifth item'],
+            [6, 'Six', 'Sixth item'],
+            [7, 'Seven', 'Seventh item'],
+            [8, 'Eight', 'Eight item'],
+            [9, 'Nine', 'Ninth item'],
+            [10, 'Ten', 'Tenth item'],
+            [11, 'Eleven', 'Eleventh item'],
+            [12, 'Twelve', 'Twelfth item'],
+            [13, 'Thirteen', 'Thirteenth item'],
+            [14, 'Fourteen', 'Fourteenth item'],
+            [15, 'Fifteen', 'Fifteenth item'],
+            [16, 'Sixteen', 'Sixteenth item']
+        ]
+    });
+
+    columns = [{
+        text: 'Id',
+        dataIndex: 'id',
+        flex: 1,
+        filter: 'number',
+        filterOption: {
+            xtype: 'combo',
+            displayField: 'name',
+            valueField: 'id',
+            value: '',
+            mode: 'local',
+            editable: false,
+            triggerAction: 'all',
+            store: {
+                fields: ['id', 'name'],
+                data: [
+                        ['', 'All'],
+                        [1, 'Name 1'],
+                        [2, 'Name 2'],
+                        [3, 'Name 3']
+                ]
+            }
+        }
+    }, {
+        text: 'Name',
+        dataIndex: 'name',
+        flex: 1,
+        filter: {
+            type: 'string',
+            value: 'T'
+        },
+        filterOption: {}
+    }, {
+        text: 'Description',
+        flex: 1,
+        dataIndex: 'description'
+    }];
+
+    feature = Ext.create('Mayflower.grid.feature.FilterForm');
+
+    grid = Ext.create('Ext.grid.Panel', {
+        features: [feature],
+        plugins: ['gridfilters'],
+        stripeRows: true,
+        bbar: {xtype: 'pagingtoolbar', store: store},
+        store: store,
+        columns: columns
+    });
+
+    testWindow = Ext.create('Ext.window.Window', {
+        width: 600,
+        height: 400,
+        plain: true,
+        resizable: true,
+        modal: true,
+        layout: 'fit',
+        items: [grid]
+    }).show();
+
+});
+    </script>
+</header>
+<body>
+
+</body>
+</html>
