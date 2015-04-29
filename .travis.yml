@@ -1,6 +1,25 @@
 language: node_js
 node_js:
   - "0.12"
+env:
+  global:
+    - EXTJS_VERSION="5.1.0"
+    - SENCHA_CMD_VERSION="5.1.2.52"
+before_script:
+  # download & install ext-js
+  - "wget cdn.sencha.com/ext/gpl/ext-${EXTJS_VERSION}-gpl.zip"
+  - "unzip -q ext-${EXTJS_VERSION}-gpl.zip"
+  - "ln -s ext-${EXTJS_VERSION} ext"
+  # download & install sencha command
+  - "wget http://cdn.sencha.com/cmd/${SENCHA_CMD_VERSION}/SenchaCmd-${SENCHA_CMD_VERSION}-linux-x64.run.zip"
+  - "unzip -q SenchaCmd-${SENCHA_CMD_VERSION}-linux-x64.run.zip"
+  - "chmod +x SenchaCmd-${SENCHA_CMD_VERSION}-linux-x64.run"
+  - "./SenchaCmd-${SENCHA_CMD_VERSION}-linux-x64.run --mode unattended"
+  - "export PATH=~/bin/Sencha/Cmd/${SENCHA_CMD_VERSION}:$PATH"
+  # install jsduck
+  - gem install jsduck
+  # build sencha package
+  - (cd packages/mf-grid-filter-form; sencha package build)
 script:
   - npm test
   - ./node_modules/jscs/bin/jscs packages
