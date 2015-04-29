@@ -1,7 +1,14 @@
 {
   "requireMultipleVarDecl": true,
   "requireCurlyBraces": ["if", "else", "for", "while", "do"],
+  "requireSpacesInAnonymousFunctionExpression": {
+    "beforeOpeningRoundBrace": true,
+    "beforeOpeningCurlyBrace": true
+  },
+  "requireLineFeedAtFileEnd": true,
   "disallowKeywords": ["with"],
+  "validateIndentation": 4,
+  "maximumLineLength": 120,
   "disallowMultipleLineBreaks": true,
   "validateJSDoc": {
     "checkParamNames": true,
@@ -12,6 +19,8 @@
     "lib-cov",
     "html-report",
     "karma.conf.js",
+    "**/build/**",
+    "**/bootstrap.js",
     "**/.sencha/**",
     "**/sass/**"
   ]
