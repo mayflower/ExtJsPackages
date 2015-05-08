@@ -1,8 +1,10 @@
 .idea
 .architect
+bootstrap.js
 bootstrap.json
 build/
 ext/
 node_modules
+**/docs/api
 *~
 

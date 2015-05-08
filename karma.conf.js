@@ -15,8 +15,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-        // from sencha CDN
-        'https://extjs.cachefly.net/ext/gpl/5.1.0/build/ext-all-debug.js',
+        '../ext/build/ext-all-debug.js',
         {pattern: '*/src/**/*.js'},
         {pattern: '*/test/specs/**/*Spec.js'}
     ],

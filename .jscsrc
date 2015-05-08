@@ -19,6 +19,7 @@
     "lib-cov",
     "html-report",
     "karma.conf.js",
+    "**/docs/api/**",
     "**/build/**",
     "**/bootstrap.js",
     "**/.sencha/**",
