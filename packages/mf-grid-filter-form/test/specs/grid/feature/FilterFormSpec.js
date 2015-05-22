@@ -89,11 +89,12 @@ describe('Mayflower grid filter form test suite', function () {
             filterForm.items.getAt(1).setValue('On');
             filterForm.getDockedItems()[0].items.getAt(0).handler();
             expect(arrayStore.getCount()).toEqual(1);
+        });
+
+        it('should filter the grid depending on the form data', function () {
+            var filterForm = grid.getDockedItems()[1];
 
             filterForm.items.getAt(1).setValue('One');
-            filterForm.getDockedItems()[0].items.getAt(0).handler();
-            expect(arrayStore.getCount()).toEqual(1);
-
             filterForm.items.getAt(0).setValue('Two');
             filterForm.getDockedItems()[0].items.getAt(0).handler();
             expect(arrayStore.getCount()).toEqual(0);

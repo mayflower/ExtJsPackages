@@ -3,7 +3,7 @@ ExtJS Packages by Mayflower
 
 ## Requirements
 
-* ExtJS-5.1 [direct download link](http://cdn.sencha.com/ext/gpl/ext-5.1.0-gpl.zip)
+* ExtJS-5.1.1 [direct download link](http://cdn.sencha.com/ext/gpl/ext-5.1.1-gpl.zip)
 * [Sencha Cmd](http://www.sencha.com/products/sencha-cmd/)
 * [JSDuck](https://github.com/senchalabs/jsduck)
 * [NodeJS](https://nodejs.org/)
@@ -20,11 +20,11 @@ ExtJS Packages by Mayflower
 ```sh
     $ npm install
 ```
-3. Extract the ExtJS framework files into the `ext` directory:
+3. [Download](http://cdn.sencha.com/ext/gpl/ext-5.1.1-gpl.zip) and extract the ExtJS framework files into the `ext` directory:
 
 ```sh
-    $ unzip <path_to>/ext-5.1.0-gpl.zip
-    $ mv ext-5.1.0 ext
+    $ unzip <path_to>/ext-5.1.1-gpl.zip
+    $ mv ext-5.1.1 ext
 ```
 4. build the package with Sencha Cmd:
 
