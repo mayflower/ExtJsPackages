@@ -6,6 +6,7 @@ bootstrap.json
 build/
 ext/
 node_modules
+**/sass/example
 **/docs/api
 **/example/example.css
 *~

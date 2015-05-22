@@ -171,4 +171,213 @@ describe('Mayflower grid filter form test suite', function () {
         });
     });
 
+    describe('Test checking for FormPosition FilterOption', function () {
+        var feature;
+
+        beforeEach(function () {
+            feature = Ext.create('Mayflower.grid.feature.FilterForm', {hiddenResetButton: true});
+        });
+
+        afterEach(function () {
+            Ext.destroy(feature);
+        });
+
+        it ('should return true if "formPosition" is defined', function () {
+            expect(feature.hasFormPositionFilterOption([{
+                formPosition: 77
+            }])).toBe(true);
+        });
+
+        it ('should return false if "formPosition" is not defined', function () {
+            var testCases = [
+                [],
+                [{}],
+                [{}, {}],
+                [{foo: 'foo'}, {foo: 'foo', bar: 'bar'}]
+            ];
+
+            Ext.Array.each(testCases, function (filterOptions) {
+                expect(feature.hasFormPositionFilterOption(filterOptions)).toBe(false);
+            });
+        });
+
+        it('should return an unmodified array of columns when "formPosition" is not defined', function () {
+            expect(feature.getColumnsSortedByFormPosition(columns)).toBe(columns);
+        });
+
+        it('should return an array of columns sorted by "formPosition"', function () {
+            var testCases = [{
+                filterItems: [{
+                    fieldLabel: 'id',
+                    name: 'Id',
+                    formPosition: 2
+                }, {
+                    fieldLabel: 'name',
+                    name: 'Name',
+                    formPosition: 0
+                }, {
+                    fieldLabel: 'description',
+                    name: 'Description',
+                    formPosition: 1
+                }],
+                sortedItems: [{
+                    fieldLabel: 'name',
+                    name: 'Name',
+                    formPosition: 0
+                }, {
+                    fieldLabel: 'description',
+                    name: 'Description',
+                    formPosition: 1
+                }, {
+                    fieldLabel: 'id',
+                    name: 'Id',
+                    formPosition: 2
+                }]
+            }, {
+                filterItems: [{
+                    fieldLabel: 'id',
+                    name: 'Id'
+                }, {
+                    fieldLabel: 'name',
+                    name: 'Name',
+                    formPosition: 1
+                }, {
+                    fieldLabel: 'description',
+                    name: 'Description',
+                    formPosition: 0
+                }],
+                sortedItems: [{
+                    fieldLabel: 'description',
+                    name: 'Description',
+                    formPosition: 0
+                }, {
+                    fieldLabel: 'name',
+                    name: 'Name',
+                    formPosition: 1
+                }, {
+                    fieldLabel: 'id',
+                    name: 'Id'
+                }]
+            }, {
+                filterItems: [{
+                    fieldLabel: 'id',
+                    name: 'Id',
+                    lala: {}
+                }, {
+                    fieldLabel: 'name',
+                    name: 'Name',
+                    formPosition: 0
+                }, {
+                    fieldLabel: 'description',
+                    name: 'Description',
+                    formPosition: 1
+                }],
+                sortedItems: [{
+                    fieldLabel: 'name',
+                    name: 'Name',
+                    formPosition: 0
+                }, {
+                    fieldLabel: 'description',
+                    name: 'Description',
+                    formPosition: 1
+                }, {
+                    fieldLabel: 'id',
+                    name: 'Id',
+                    lala: {}
+                }]
+            }, {
+                filterItems: [{
+                    fieldLabel: 'name',
+                    name: 'Name',
+                    formPosition: 0
+                }, {
+                    fieldLabel: 'description',
+                    name: 'Description',
+                    formPosition: 1
+                }, {
+                    fieldLabel: 'id',
+                    name: 'Id',
+                    lala: {}
+                }],
+                sortedItems: [{
+                    fieldLabel: 'name',
+                    name: 'Name',
+                    formPosition: 0
+                }, {
+                    fieldLabel: 'description',
+                    name: 'Description',
+                    formPosition: 1
+                }, {
+                    fieldLabel: 'id',
+                    name: 'Id',
+                    lala: {}
+                }]
+            }];
+
+            Ext.Array.each(testCases, function (data) {
+                expect(feature.getColumnsSortedByFormPosition(data.filterItems)).toEqual(data.sortedItems);
+            });
+        });
+    });
+
+    describe('Test the filtered grid with custom order', function () {
+        var testWindow, grid, feature, columns;
+
+        columns = [{
+            text: 'Id',
+            dataIndex: 'id',
+            filterOption: {}
+        }, {
+            text: 'Name',
+            dataIndex: 'name',
+            filterOption: {
+                formPosition: 0
+            }
+        }, {
+            text: 'Description',
+            dataIndex: 'description',
+            filterOption: {
+                formPosition: 1
+            }
+        }];
+
+        feature = Ext.create('Mayflower.grid.feature.FilterForm', {hiddenResetButton: true});
+
+        beforeEach(function (done) {
+            grid = Ext.create('Ext.grid.Panel', {
+                features: [feature],
+                store: arrayStore,
+                columns: columns
+            });
+
+            Ext.onReady(function () {
+                testWindow = Ext.create('Ext.window.Window', {
+                    items: [grid],
+                    listeners: {
+                        afterrender: function () {
+                            done();
+                        }
+                    }
+                }).show();
+            });
+        });
+
+        afterEach(function () {
+            Ext.destroy(grid);
+            Ext.destroy(testWindow);
+        });
+
+        it('should have a grid filter form with hidden reset button', function () {
+            var filterForm = grid.getDockedItems()[1];
+
+            expect(filterForm.items.getAt(0).xtype).toEqual('textfield');
+            expect(filterForm.items.getAt(0).getFieldLabel()).toEqual('Name');
+
+            expect(filterForm.items.getAt(1).xtype).toEqual('textfield');
+            expect(filterForm.items.getAt(1).getFieldLabel()).toEqual('Description');
+
+            expect(filterForm.items.getAt(2).xtype).toEqual('textfield');
+            expect(filterForm.items.getAt(2).getFieldLabel()).toEqual('Id');
+        });
+    });
 });

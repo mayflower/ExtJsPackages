@@ -29,7 +29,9 @@ Ext.define('SimpleGrid.view.grid.RemoteNumberGrid', {
         var store = Ext.create('SimpleGrid.store.RemoteNumber');
 
         Ext.apply(this, {
-            features: [Ext.create('Mayflower.grid.feature.FilterForm')],
+            features: [{
+                ftype: 'filterform'
+            }],
             store: store,
             bbar: [{xtype: 'pagingtoolbar', store: store}]
         });
