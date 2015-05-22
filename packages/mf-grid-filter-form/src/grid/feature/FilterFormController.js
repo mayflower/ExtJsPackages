@@ -15,6 +15,7 @@ Ext.define('Mayflower.grid.feature.FilterFormController', {
             filters = this.buildFilter(formValues);
 
         store.clearFilter();
+
         store.setFilters(filters);
     },
 
@@ -38,14 +39,11 @@ Ext.define('Mayflower.grid.feature.FilterFormController', {
 
         Ext.iterate(formValues, function (key, value) {
             if (!Ext.isEmpty(value)) {
-                filters.push(function (item) {
-                    var itemValue = item.get(key);
-
-                    if (Ext.isString(itemValue)) {
-                        return Ext.String.startsWith(itemValue, value);
-                    }
-                    return itemValue === value;
-                });
+                filters.push(new Ext.util.Filter({
+                    operator: 'like',
+                    property: key,
+                    value: value
+                }));
             }
         });
 
