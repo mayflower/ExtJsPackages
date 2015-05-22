@@ -7,6 +7,8 @@ Ext.define('SimpleGrid.view.main.Main', {
     extend: 'Ext.container.Container',
     requires: [
         'Mayflower.grid.feature.FilterForm',
+        'SimpleGrid.store.LocalNumber',
+        'SimpleGrid.view.grid.RemoteNumberGrid',
         'SimpleGrid.view.main.MainController',
         'SimpleGrid.view.main.MainModel'
     ],
@@ -32,6 +34,7 @@ Ext.define('SimpleGrid.view.main.Main', {
         width: 250,
         split: true
     },{
+        height: 400,
         region: 'center',
         xtype: 'tabpanel',
         items:[{
@@ -41,32 +44,7 @@ Ext.define('SimpleGrid.view.main.Main', {
                 layout: 'fit',
                 features: [Ext.create('Mayflower.grid.feature.FilterForm')],
                 store: {
-                    fields: [{name: 'id', type: 'int'}, 'name', 'description'],
-                    proxy: {
-                        type: 'memory',
-                        enablePaging: true,
-                        reader: {
-                            type: 'array'
-                        }
-                    },
-                    data: [
-                        [1, 'One', 'First item'],
-                        [2, 'Two', 'Second item'],
-                        [3, 'Three', 'Third item'],
-                        [4, 'Four', 'Fourth item'],
-                        [5, 'Five', 'Fifth item'],
-                        [6, 'Six', 'Sixth item'],
-                        [7, 'Seven', 'Seventh item'],
-                        [8, 'Eight', 'Eight item'],
-                        [9, 'Nine', 'Ninth item'],
-                        [10, 'Ten', 'Tenth item'],
-                        [11, 'Eleven', 'Eleventh item'],
-                        [12, 'Twelve', 'Twelfth item'],
-                        [13, 'Thirteen', 'Thirteenth item'],
-                        [14, 'Fourteen', 'Fourteenth item'],
-                        [15, 'Fifteen', 'Fifteenth item'],
-                        [16, 'Sixteen', 'Sixteenth item']
-                    ]
+                    type: 'localnumber'
                 },
                 columns: [{
                     text: 'Name',
@@ -78,6 +56,31 @@ Ext.define('SimpleGrid.view.main.Main', {
                     },
                     filterOption: {}
                 }]
+            }]
+        }, {
+            title: 'Grid with filter from with paging bar',
+            items: [{
+                xtype: 'grid',
+                layout: 'fit',
+                features: [Ext.create('Mayflower.grid.feature.FilterForm')],
+                store: {
+                    type: 'localnumber',
+                    pageSize: 5
+                },
+                columns: [{
+                    text: 'Name',
+                    dataIndex: 'name',
+                    flex: 1,
+                    filterOption: {}
+                }],
+                bbar: [{xtype: 'pagingtoolbar', store: {type: 'localnumber'}}]
+            }]
+        }, {
+            title: 'Remote Grid with filter from with paging bar',
+            items: [{
+                xtype: 'remotenumbergrid',
+                layout: 'fit',
+                height: 300
             }]
         }]
     }]

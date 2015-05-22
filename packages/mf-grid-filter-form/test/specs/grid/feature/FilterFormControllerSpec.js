@@ -5,13 +5,11 @@ describe('Mayflower grid filter form controller test suite', function () {
         it('should return the correct filter', function () {
             var filters = controller.buildFilter({a: 'a', b: 'b'}),
                 item = {
-                    get: function () {
-                        return 'a';
-                    }
+                    a: 'a'
                 };
             expect(filters.length).toBe(2);
-            expect(filters[0](item)).toBeTruthy();
-            expect(filters[1](item)).toBeFalsy();
+            expect(filters[0].filter(item)).toBeTruthy();
+            expect(filters[1].filter(item)).toBeFalsy();
         });
     });
 });

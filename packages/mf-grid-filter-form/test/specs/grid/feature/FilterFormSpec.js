@@ -1,9 +1,9 @@
 describe('Mayflower grid filter form test suite', function () {
-    var store, columns;
+    var arrayStore, columns;
 
     Ext.require('Mayflower.grid.feature.FilterForm');
 
-    store = Ext.create('Ext.data.ArrayStore', {
+    arrayStore = Ext.create('Ext.data.ArrayStore', {
         fields: [{name: 'id', type: 'int'}, 'name', 'description'],
         data: [
             [1, 'One', 'First item'],
@@ -32,7 +32,7 @@ describe('Mayflower grid filter form test suite', function () {
         beforeEach(function (done) {
             grid = Ext.create('Ext.grid.Panel', {
                 features: [feature],
-                store: store,
+                store: arrayStore,
                 columns: columns
             });
 
@@ -75,28 +75,28 @@ describe('Mayflower grid filter form test suite', function () {
             expect(filterForm.getDockedItems()[0].xtype).toEqual('toolbar');
             expect(filterForm.getDockedItems()[0].items.getAt(1).isHidden()).toBeFalsy();
 
-            expect(store.getCount()).toEqual(2);
-            expect(store.getAt(0).get('name')).toEqual('One');
-            expect(store.getAt(1).get('name')).toEqual('Two');
+            expect(arrayStore.getCount()).toEqual(2);
+            expect(arrayStore.getAt(0).get('name')).toEqual('One');
+            expect(arrayStore.getAt(1).get('name')).toEqual('Two');
         });
 
         it('should filter the grid depending on the form data', function () {
             var filterForm = grid.getDockedItems()[1];
 
             filterForm.getDockedItems()[0].items.getAt(0).handler();
-            expect(store.getCount()).toEqual(2);
+            expect(arrayStore.getCount()).toEqual(2);
 
             filterForm.items.getAt(1).setValue('On');
             filterForm.getDockedItems()[0].items.getAt(0).handler();
-            expect(store.getCount()).toEqual(1);
+            expect(arrayStore.getCount()).toEqual(1);
 
             filterForm.items.getAt(1).setValue('One');
             filterForm.getDockedItems()[0].items.getAt(0).handler();
-            expect(store.getCount()).toEqual(1);
+            expect(arrayStore.getCount()).toEqual(1);
 
             filterForm.items.getAt(0).setValue('Two');
             filterForm.getDockedItems()[0].items.getAt(0).handler();
-            expect(store.getCount()).toEqual(0);
+            expect(arrayStore.getCount()).toEqual(0);
         });
 
         it('should have a working reset button', function () {
@@ -109,7 +109,7 @@ describe('Mayflower grid filter form test suite', function () {
             expect(filterForm.items.getAt(0).getValue()).toEqual('');
             expect(filterForm.items.getAt(1).getValue()).toEqual('');
             filterForm.getDockedItems()[0].items.getAt(0).handler();
-            expect(store.getCount()).toEqual(2);
+            expect(arrayStore.getCount()).toEqual(2);
         });
     });
 
@@ -121,7 +121,7 @@ describe('Mayflower grid filter form test suite', function () {
         beforeEach(function (done) {
             grid = Ext.create('Ext.grid.Panel', {
                 features: [feature],
-                store: store,
+                store: arrayStore,
                 columns: columns
             });
 
@@ -164,9 +164,9 @@ describe('Mayflower grid filter form test suite', function () {
             expect(filterForm.getDockedItems()[0].xtype).toEqual('toolbar');
             expect(filterForm.getDockedItems()[0].items.getAt(1).isHidden()).toBeTruthy();
 
-            expect(store.getCount()).toEqual(2);
-            expect(store.getAt(0).get('name')).toEqual('One');
-            expect(store.getAt(1).get('name')).toEqual('Two');
+            expect(arrayStore.getCount()).toEqual(2);
+            expect(arrayStore.getAt(0).get('name')).toEqual('One');
+            expect(arrayStore.getAt(1).get('name')).toEqual('Two');
         });
     });
 

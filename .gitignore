@@ -1,10 +1,12 @@
 .idea
 .architect
+bootstrap.css
 bootstrap.js
 bootstrap.json
 build/
 ext/
 node_modules
 **/docs/api
+**/example/example.css
 *~
 
