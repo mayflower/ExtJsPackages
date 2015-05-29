@@ -1,8 +1,18 @@
 /**
- * This {@link Ext.grid.feature.Feature grid feature} adds a form to the grid with filter options
+ * This {@link Ext.grid.feature.Feature grid feature} adds a {@link Ext.form.Panel form} to the grid with filter options
  * similar to {@link Ext.grid.filters.Filters}.
  *
  * The filter form is docked to the bottom of the {@link Ext.grid.Panel grid}.
+ *
+ * When this feature is enabled for a grid, each column having the property object `filterOption` set,
+ * will be added to the filter form panel as a {@link Ext.form.field.Text text field} by default.
+ *
+ * The items in the form will appear in the same order as they are defined in the columns.
+ * Custom ordering can be provided by using the `filterOption` property `formPosition`.
+ *
+ *     filterOption: {
+ *         formPosition: 1
+ *     }
  */
 Ext.define('Mayflower.grid.feature.FilterForm', {
     extend: 'Ext.grid.feature.Feature',
@@ -15,15 +25,31 @@ Ext.define('Mayflower.grid.feature.FilterForm', {
     hiddenResetButton: false,
 
     //<locale>
+    /**
+     * @cfg {String} showButtonText
+     * Button text for the submit button in filter form.
+     */
     showButtonText: 'Show',
     //</locale>
     //<locale>
+    /**
+     * @cfg {String} showButtonTooltipText
+     * Tooltip text for the submit button in filter form.
+     */
     showButtonTooltipText: '',
     //</locale>
     //<locale>
+    /**
+     * @cfg {String} resetButtonText
+     * Button text for the reset button in filter form.
+     */
     resetButtonText: 'Reset',
     //</locale>
     //<locale>
+    /**
+     * @cfg {String} resetButtonTooltipText
+     * Tooltip text for the reset button in filter form.
+     */
     resetButtonTooltipText: '',
     //</locale>
 
@@ -55,16 +81,68 @@ Ext.define('Mayflower.grid.feature.FilterForm', {
 
         grid.on({
             beforerender: function (grid) {
-                var filterItems = me.buildFilterOptionItems(grid.getColumnManager().getColumns());
+                var columns = grid.getColumnManager().getColumns(),
+                    filterItems = me.buildFilterOptionItems(columns);
 
                 if (filterItems.length === 0) {
                     return;
                 }
 
+                if (me.hasFormPositionFilterOption(filterItems)) {
+                    filterItems = me.getColumnsSortedByFormPosition(filterItems);
+                }
                 me.form.add(filterItems);
+
                 grid.insertDocked(0, me.form);
             }
         });
+    },
+
+    /**
+     * Check on of the columns has the property "formPosition"
+     *
+     * @param {Ext.grid.column.Column[]} columns
+     * @returns {boolean}
+     *
+     * @private
+     */
+    hasFormPositionFilterOption: function (columns) {
+        var hasFormPosition = false;
+        Ext.Array.each(columns, function (item) {
+            var hasItemFormPosition = false;
+
+            if (item.formPosition !== undefined) {
+                hasItemFormPosition = true;
+            }
+
+            hasFormPosition = hasFormPosition || hasItemFormPosition;
+        });
+
+        return hasFormPosition;
+    },
+
+    /**
+     * Sort the columns by the "formPosition" property.
+     *
+     * @param {Ext.grid.column.Column[]} columns
+     * @returns {Ext.grid.column.Column[]}
+     *
+     * @private
+     */
+    getColumnsSortedByFormPosition: function (columns) {
+        var sortedColumns = Ext.Array.sort(columns, function (a, b) {
+            if (a.formPosition !== undefined && b.formPosition !== undefined) {
+                return (a.formPosition < b.formPosition) ? -1 : 1;
+            }
+
+            if (a.formPosition === undefined) {
+                return 1;
+            }
+            // b.formPosition is undefined
+            return -1;
+        });
+
+        return sortedColumns;
     },
 
     /**

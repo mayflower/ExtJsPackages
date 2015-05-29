@@ -38,7 +38,7 @@ Ext.define('SimpleGrid.view.main.Main', {
         region: 'center',
         xtype: 'tabpanel',
         items:[{
-            title: 'Grid with filter from',
+            title: 'Grid with filter form',
             items: [{
                 xtype: 'grid',
                 layout: 'fit',
@@ -62,7 +62,9 @@ Ext.define('SimpleGrid.view.main.Main', {
             items: [{
                 xtype: 'grid',
                 layout: 'fit',
-                features: [Ext.create('Mayflower.grid.feature.FilterForm')],
+                features: [{
+                    ftype: 'filterform'
+                }],
                 store: {
                     type: 'localnumber',
                     pageSize: 5
@@ -81,6 +83,36 @@ Ext.define('SimpleGrid.view.main.Main', {
                 xtype: 'remotenumbergrid',
                 layout: 'fit',
                 height: 300
+            }]
+        }, {
+            title: 'Grid with ordered paging bar',
+            items: [{
+                xtype: 'grid',
+                layout: 'fit',
+                features: [{
+                    ftype: 'filterform'
+                }],
+                store: {
+                    type: 'localnumber',
+                    pageSize: 5
+                },
+                columns: [{
+                    text: 'Id',
+                    dataIndex: 'id',
+                    flex: 1,
+                    filterOption: {}
+                }, {
+                    text: 'Description',
+                    dataIndex: 'description',
+                    flex: 1,
+                    filterOption: {formPosition: 1}
+                }, {
+                    text: 'Name',
+                    dataIndex: 'name',
+                    flex: 1,
+                    filterOption: {formPosition: 0}
+                }],
+                bbar: [{xtype: 'pagingtoolbar', store: {type: 'localnumber'}}]
             }]
         }]
     }]
