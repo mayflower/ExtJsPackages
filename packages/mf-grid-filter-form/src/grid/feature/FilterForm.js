@@ -53,22 +53,45 @@ Ext.define('Mayflower.grid.feature.FilterForm', {
      */
     resetButtonTooltipText: '',
     //</locale>
+    //<locale>
+    /**
+     * @cfg {String} containerTitle
+     * Title for the filter container
+     */
+    containerTitle: 'Filters',
+    //</locale>
 
     form: undefined,
 
+    /**
+     * @cfg {Boolean} collapsible
+     *
+     * This makes the filter form collapsible
+     */
+    collapsible: false,
+
+    /**
+     * @cfg {Number} columns
+     *
+     * This provides a column layout if columns is greater than 1
+     */
+    columns: 1,
+
     //private
     init: function (grid) {
-        var me = this;
+        var me = this,
+            formConfig,
+            columnWidth;
 
         me.callParent(arguments);
 
-        me.form = Ext.create({
+        formConfig = {
             xtype: 'form',
             controller: 'filterform',
             dock: 'bottom',
             itemId: 'grid-filter-form',
-            height: 100,
             border: false,
+            region: 'south',
             defaults: {
                 anchor: '90%',
                 allowBlank: true,
@@ -76,9 +99,48 @@ Ext.define('Mayflower.grid.feature.FilterForm', {
                 labelWidth: 100,
                 msgTarget: 'side'
             },
-            defaultType: 'textfield',
             dockedItems: me.createFilterFormToolbar()
-        });
+        };
+
+        if (me.collapsible === true) {
+            Ext.apply(formConfig, {
+                height: 250,
+                collapseMode: 'header',
+                collapsible: true,
+                collapseDirection: 'bottom',
+                collapsed: true,
+                collapseFirst: true,
+                border: true,
+                scrollable: true,
+                title: me.containerTitle,
+                animCollapse: false
+            });
+        }
+
+        if (me.columns > 1) {
+            columnWidth = 1 / me.columns;
+            Ext.apply(formConfig, {
+                layout: 'column',
+                defaults: {
+                    style: 'display: inline-block; vertical-align: top;',
+                    allowBlank: true,
+                    labelAlign: 'left',
+                    labelWidth: 100,
+                    msgTarget: 'side',
+                    defaultType: 'textfield',
+                    anchor: '90%',
+                    xtype: 'container',
+                    layout: 'form',
+                    columnWidth: columnWidth
+                }
+            });
+        } else {
+            Ext.apply(formConfig, {
+                defaultType: 'textfield'
+            });
+        }
+
+        me.form = Ext.create(formConfig);
 
         grid.on({
             beforerender: function (grid) {
@@ -92,7 +154,12 @@ Ext.define('Mayflower.grid.feature.FilterForm', {
                 if (me.hasFormPositionFilterOption(filterItems)) {
                     filterItems = me.getColumnsSortedByFormPosition(filterItems);
                 }
-                me.form.add(filterItems);
+
+                if (me.columns > 1) {
+                    me.addColumnItems(filterItems);
+                } else {
+                    me.form.add(filterItems);
+                }
 
                 grid.insertDocked(0, me.form);
             }
@@ -131,7 +198,7 @@ Ext.define('Mayflower.grid.feature.FilterForm', {
      * @private
      */
     getColumnsSortedByFormPosition: function (columns) {
-        var sortedColumns = Ext.Array.sort(columns, function (a, b) {
+        return Ext.Array.sort(columns, function (a, b) {
             if (a.formPosition !== undefined && b.formPosition !== undefined) {
                 return (a.formPosition < b.formPosition) ? -1 : 1;
             }
@@ -142,8 +209,6 @@ Ext.define('Mayflower.grid.feature.FilterForm', {
             // b.formPosition is undefined
             return -1;
         });
-
-        return sortedColumns;
     },
 
     /**
@@ -218,5 +283,111 @@ Ext.define('Mayflower.grid.feature.FilterForm', {
                 }
             }]
         });
+    },
+
+    /**
+     * Cuts filterItems into proper pieces and adds them as columns
+     *
+     * @param {Array} filterItems
+     *
+     * @private
+     */
+    addColumnItems: function (filterItems) {
+        var me = this,
+            formColumnItems,
+            elements,
+            columnElementsNumber,
+            columnElements,
+            hiddenFields,
+            displayedFields;
+
+        formColumnItems = [];
+        displayedFields = me.getDisplayedFilterElements(filterItems);
+        hiddenFields = me.getHiddenFilterElements(filterItems);
+        elements = displayedFields.length;
+        columnElementsNumber = parseInt(elements / me.columns, 10);
+        columnElements = [];
+
+        for (var field = 1; field <= displayedFields.length; field ++) {
+            columnElements.push(displayedFields[field-1]);
+
+            if (field % columnElementsNumber === 0 && formColumnItems.length < me.columns) {
+                formColumnItems.push(columnElements);
+                columnElements = [];
+            }
+        }
+
+        if (columnElements.length > 0) {
+            formColumnItems = me.addElementsToLastColumn(formColumnItems, columnElements);
+        }
+
+        if (hiddenFields.length > 0) {
+            formColumnItems = me.addElementsToLastColumn(formColumnItems, hiddenFields);
+        }
+
+        for (var itemCounter = 0; itemCounter < formColumnItems.length; itemCounter++) {
+            me.form.add({
+                items: formColumnItems[itemCounter]
+            });
+        }
+    },
+
+    /**
+     * Returns all displayed elements of the filter
+     *
+     * @param {Array} filterItems
+     * @returns {Array}
+     *
+     * @private
+     */
+    getDisplayedFilterElements: function (filterItems) {
+        return Ext.Array.filter(filterItems, function (item) {
+            if (!item.hasOwnProperty('xtype')) {
+                return true;
+            }
+
+            return item.xtype !== 'hiddenfield';
+        });
+    },
+
+    /**
+     * Returns all hidden elements of the filter
+     *
+     * @param {Array} filterItems
+     * @returns {Array}
+     *
+     * @private
+     */
+    getHiddenFilterElements: function (filterItems) {
+        return Ext.Array.filter(filterItems, function (item) {
+            if (!item.hasOwnProperty('xtype')) {
+                return false;
+            }
+
+            return item.xtype === 'hiddenfield';
+        });
+    },
+
+    /**
+     * Adds elements to the last column
+     *
+     * @param {Array} allColumnElements
+     * @param {Array} elementsToAdd
+     *
+     * @return {Array}
+     *
+     * @private
+     */
+    addElementsToLastColumn: function (allColumnElements, elementsToAdd) {
+        if (allColumnElements.length > 0) {
+            for (var singleElement = 0; singleElement < elementsToAdd.length; singleElement++) {
+                allColumnElements[allColumnElements.length - 1].push(elementsToAdd[singleElement]);
+
+            }
+        } else {
+            allColumnElements.push(elementsToAdd);
+        }
+
+        return allColumnElements;
     }
 });

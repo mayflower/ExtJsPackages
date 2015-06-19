@@ -58,12 +58,13 @@ Ext.define('SimpleGrid.view.main.Main', {
                 }]
             }]
         }, {
-            title: 'Grid with filter from with paging bar',
+            title: 'Grid with collapsible filter form and paging bar',
             items: [{
                 xtype: 'grid',
                 layout: 'fit',
                 features: [{
-                    ftype: 'filterform'
+                    ftype: 'filterform',
+                    collapsible: true
                 }],
                 store: {
                     type: 'localnumber',
@@ -78,19 +79,21 @@ Ext.define('SimpleGrid.view.main.Main', {
                 bbar: [{xtype: 'pagingtoolbar', store: {type: 'localnumber'}}]
             }]
         }, {
-            title: 'Remote Grid with filter from with paging bar',
+            title: 'Remote Grid with filter from and paging bar',
             items: [{
                 xtype: 'remotenumbergrid',
                 layout: 'fit',
                 height: 300
             }]
         }, {
-            title: 'Grid with ordered paging bar',
+            title: 'Grid with ordered paging bar and 2 columns filter form',
             items: [{
                 xtype: 'grid',
                 layout: 'fit',
+                id: 'orderedPagingGrid',
                 features: [{
-                    ftype: 'filterform'
+                    ftype: 'filterform',
+                    columns: 2
                 }],
                 store: {
                     type: 'localnumber',
