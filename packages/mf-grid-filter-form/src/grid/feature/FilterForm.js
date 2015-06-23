@@ -16,6 +16,7 @@
  */
 Ext.define('Mayflower.grid.feature.FilterForm', {
     extend: 'Ext.grid.feature.Feature',
+    requires: [ 'Mayflower.grid.feature.FilterFormController' ],
     alias: 'feature.filterform',
 
     /**
