@@ -14,7 +14,7 @@ Ext.define('SimpleGrid.view.main.Main', {
     ],
 
     xtype: 'app-main',
-    
+
     controller: 'main',
     viewModel: {
         type: 'main'
@@ -54,7 +54,9 @@ Ext.define('SimpleGrid.view.main.Main', {
                         type: 'string',
                         value: 'T'
                     },
-                    filterOption: {}
+                    filterOption: {
+                        resettable: true
+                    }
                 }]
             }]
         }, {
@@ -108,7 +110,10 @@ Ext.define('SimpleGrid.view.main.Main', {
                     text: 'Description',
                     dataIndex: 'description',
                     flex: 1,
-                    filterOption: {formPosition: 1}
+                    filterOption: {
+                        formPosition: 1,
+                        resettable: true
+                    }
                 }, {
                     text: 'Name',
                     dataIndex: 'name',

@@ -155,6 +155,8 @@ Ext.define('Mayflower.grid.feature.FilterForm', {
                     filterItems = me.getColumnsSortedByFormPosition(filterItems);
                 }
 
+                filterItems = me.addResetTriggerToFormField(filterItems);
+
                 if (me.columns > 1) {
                     me.addColumnItems(filterItems);
                 } else {
@@ -187,6 +189,34 @@ Ext.define('Mayflower.grid.feature.FilterForm', {
         });
 
         return hasFormPosition;
+    },
+
+    /**
+     * Add an reset button to a field
+     *
+     * @param {Ext.grid.column.Column[]} columns
+     * @returns {boolean}
+     *
+     * @private
+     */
+    addResetTriggerToFormField: function (columns) {
+        var me = this,
+            columnObjects = [];
+
+        Ext.Array.each(columns, function (column) {
+            columnObjects.push(Ext.Object.merge(column, {
+                triggers: {
+                    resetButton: {
+                        cls: 'filterform-trigger-revert',
+                        handler: function () {
+                            me.form.getController().onResetFilters(this.getName());
+                        }
+                    }
+                }
+            }));
+        });
+
+        return columnObjects;
     },
 
     /**
@@ -277,8 +307,7 @@ Ext.define('Mayflower.grid.feature.FilterForm', {
                 tooltip: me.resetButtonTooltipText,
                 hidden: me.hiddenResetButton,
                 iconCls: 'filterform-btn-icon-revert',
-                handler:
-                    function () {
+                handler: function () {
                     me.form.getController().onResetFilters(arguments);
                 }
             }]
