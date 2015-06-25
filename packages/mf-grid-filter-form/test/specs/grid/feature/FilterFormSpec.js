@@ -380,4 +380,408 @@ describe('Mayflower grid filter form test suite', function () {
             expect(filterForm.items.getAt(2).getFieldLabel()).toEqual('Id');
         });
     });
+
+    describe('Test the filtered grid with 2 column layout', function () {
+        var testWindow, grid, feature, columns;
+
+        columns = [{
+            text: 'Id',
+            dataIndex: 'id',
+            filterOption: {}
+        }, {
+            text: 'Name',
+            dataIndex: 'name',
+            filterOption: {
+                formPosition: 0
+            }
+        }, {
+            text: 'Description',
+            dataIndex: 'description',
+            filterOption: {
+                formPosition: 1
+            }
+        }];
+
+        feature = Ext.create('Mayflower.grid.feature.FilterForm', {columns: 2});
+
+        beforeEach(function (done) {
+            grid = Ext.create('Ext.grid.Panel', {
+                features: [feature],
+                store: arrayStore,
+                columns: columns
+            });
+
+            Ext.onReady(function () {
+                testWindow = Ext.create('Ext.window.Window', {
+                    items: [grid],
+                    listeners: {
+                        afterrender: function () {
+                            done();
+                        }
+                    }
+                }).show();
+            });
+        });
+
+        afterEach(function () {
+            Ext.destroy(grid);
+            Ext.destroy(testWindow);
+        });
+
+        it('should have two items', function () {
+            var form = grid.down('form');
+
+            expect(form.items.length).toEqual(2);
+            expect(form.items.getAt(0).items.length).toEqual(1);
+            expect(form.items.getAt(1).items.length).toEqual(2);
+        });
+    });
+
+    describe('Test the filtered grid with 3 column layout', function () {
+        var testWindow, grid, feature, columns;
+
+        columns = [{
+            text: 'Id',
+            dataIndex: 'id',
+            filterOption: {}
+        }, {
+            text: 'Name',
+            dataIndex: 'name',
+            filterOption: {
+                formPosition: 0
+            }
+        }, {
+            text: 'Description',
+            dataIndex: 'description',
+            filterOption: {
+                formPosition: 1
+            }
+        }];
+
+        feature = Ext.create('Mayflower.grid.feature.FilterForm', {columns: 3});
+
+        beforeEach(function (done) {
+            grid = Ext.create('Ext.grid.Panel', {
+                features: [feature],
+                store: arrayStore,
+                columns: columns
+            });
+
+            Ext.onReady(function () {
+                testWindow = Ext.create('Ext.window.Window', {
+                    items: [grid],
+                    listeners: {
+                        afterrender: function () {
+                            done();
+                        }
+                    }
+                }).show();
+            });
+        });
+
+        afterEach(function () {
+            Ext.destroy(grid);
+            Ext.destroy(testWindow);
+        });
+
+        it('should have three items', function () {
+            var form = grid.down('form');
+
+            expect(form.items.length).toEqual(3);
+            expect(form.items.getAt(0).items.length).toEqual(1);
+            expect(form.items.getAt(1).items.length).toEqual(1);
+            expect(form.items.getAt(2).items.length).toEqual(1);
+        });
+    });
+
+    describe('Test the filtered grid with 4 column layout', function () {
+        var testWindow, grid, feature, columns;
+
+        arrayStore = Ext.create('Ext.data.ArrayStore', {
+            fields: [
+                {name: 'id', type: 'int'},
+                'name',
+                'description',
+                'description 2',
+                'description 3',
+                'description 4',
+                'description 5',
+                'description 6',
+                'description 7',
+                'description 8'
+            ],
+            data: [
+                [
+                    1,
+                    'One',
+                    'First item',
+                    'description 2',
+                    'description 3',
+                    'description 4',
+                    'description 5',
+                    'description 6',
+                    'description 7',
+                    'description 8'
+                ],
+                [
+                    2,
+                    'Two',
+                    'Second item',
+                    'description 2',
+                    'description 3',
+                    'description 4',
+                    'description 5',
+                    'description 6',
+                    'description 7',
+                    'description 8'
+                ]
+            ]
+        });
+
+        columns = [{
+            text: 'Id',
+            dataIndex: 'id',
+            filterOption: {}
+        }, {
+            text: 'Name',
+            dataIndex: 'name',
+            filterOption: {
+                formPosition: 0
+            }
+        }, {
+            text: 'Description',
+            dataIndex: 'description',
+            filterOption: {
+                formPosition: 1
+            }
+        }, {
+            text: 'Description 2',
+            dataIndex: 'description 2',
+            filterOption: {
+                formPosition: 2
+            }
+        }, {
+            text: 'Description 3',
+            dataIndex: 'description 3',
+            filterOption: {
+                formPosition: 3
+            }
+        }, {
+            text: 'Description 4',
+            dataIndex: 'description 4',
+            filterOption: {
+                formPosition: 4
+            }
+        }, {
+            text: 'Description 5',
+            dataIndex: 'description 5',
+            filterOption: {
+                formPosition: 5
+            }
+        }, {
+            text: 'Description 6',
+            dataIndex: 'description 6',
+            filterOption: {
+                formPosition: 6
+            }
+        }, {
+            text: 'Description 7',
+            dataIndex: 'description 7',
+            filterOption: {
+                formPosition: 7
+            }
+        }, {
+            text: 'Description 8',
+            dataIndex: 'description 8',
+            filterOption: {
+                formPosition: 8
+            }
+        }];
+
+        feature = Ext.create('Mayflower.grid.feature.FilterForm', {columns: 4});
+
+        beforeEach(function (done) {
+            grid = Ext.create('Ext.grid.Panel', {
+                features: [feature],
+                store: arrayStore,
+                columns: columns
+            });
+
+            Ext.onReady(function () {
+                testWindow = Ext.create('Ext.window.Window', {
+                    items: [grid],
+                    listeners: {
+                        afterrender: function () {
+                            done();
+                        }
+                    }
+                }).show();
+            });
+        });
+
+        afterEach(function () {
+            Ext.destroy(grid);
+            Ext.destroy(testWindow);
+        });
+
+        it('should have four items', function () {
+            var form = grid.down('form');
+
+            expect(form.items.length).toEqual(4);
+            expect(form.items.getAt(0).items.length).toEqual(2);
+            expect(form.items.getAt(1).items.length).toEqual(2);
+            expect(form.items.getAt(2).items.length).toEqual(2);
+            expect(form.items.getAt(3).items.length).toEqual(4);
+        });
+    });
+
+    describe('Test the filtered grid with 2 column layout and hiden fields', function () {
+        var testWindow, grid, feature, columns;
+
+        arrayStore = Ext.create('Ext.data.ArrayStore', {
+            fields: [
+                {name: 'id', type: 'int'},
+                'name',
+                'description',
+                'description 2',
+                'description 3',
+                'description 4',
+                'description 5',
+                'description 6',
+                'description 7',
+                'description 8'
+            ],
+            data: [
+                [
+                    1,
+                    'One',
+                    'First item',
+                    'description 2',
+                    'description 3',
+                    'description 4',
+                    'description 5',
+                    'description 6',
+                    'description 7',
+                    'description 8'
+                ],
+                [
+                    2,
+                    'Two',
+                    'Second item',
+                    'description 2',
+                    'description 3',
+                    'description 4',
+                    'description 5',
+                    'description 6',
+                    'description 7',
+                    'description 8'
+                ]
+            ]
+        });
+
+        columns = [{
+            text: 'Id',
+            dataIndex: 'id',
+            filterOption: {}
+        }, {
+            text: 'Name',
+            dataIndex: 'name',
+            filterOption: {
+                formPosition: 0,
+                xtype: 'hiddenfield'
+            }
+        }, {
+            text: 'Description',
+            dataIndex: 'description',
+            filterOption: {
+                formPosition: 1,
+                xtype: 'hiddenfield'
+            }
+        }, {
+            text: 'Description 2',
+            dataIndex: 'description 2',
+            filterOption: {
+                formPosition: 2
+            }
+        }, {
+            text: 'Description 3',
+            dataIndex: 'description 3',
+            filterOption: {
+                formPosition: 3
+            }
+        }, {
+            text: 'Description 4',
+            dataIndex: 'description 4',
+            filterOption: {
+                formPosition: 4
+            }
+        }, {
+            text: 'Description 5',
+            dataIndex: 'description 5',
+            filterOption: {
+                formPosition: 5
+            }
+        }, {
+            text: 'Description 6',
+            dataIndex: 'description 6',
+            filterOption: {
+                formPosition: 6
+            }
+        }, {
+            text: 'Description 7',
+            dataIndex: 'description 7',
+            filterOption: {
+                formPosition: 7,
+                xtype: 'hiddenfield'
+            }
+        }, {
+            text: 'Description 8',
+            dataIndex: 'description 8',
+            filterOption: {
+                formPosition: 8
+            }
+        }];
+
+        feature = Ext.create('Mayflower.grid.feature.FilterForm', {columns: 2});
+
+        beforeEach(function (done) {
+            grid = Ext.create('Ext.grid.Panel', {
+                features: [feature],
+                store: arrayStore,
+                columns: columns
+            });
+
+            Ext.onReady(function () {
+                testWindow = Ext.create('Ext.window.Window', {
+                    items: [grid],
+                    listeners: {
+                        afterrender: function () {
+                            done();
+                        }
+                    }
+                }).show();
+            });
+        });
+
+        afterEach(function () {
+            Ext.destroy(grid);
+            Ext.destroy(testWindow);
+        });
+
+        it('should have four items and hidden fields in last item', function () {
+            var form = grid.down('form'),
+                hiddenFieldsAt0,
+                hiddenFieldsAt1;
+
+            expect(form.items.length).toEqual(2);
+            expect(form.items.getAt(0).items.length).toEqual(3);
+            expect(form.items.getAt(1).items.length).toEqual(7);
+
+            hiddenFieldsAt0 = form.items.getAt(0).items.filter('xtype', 'hiddenfield');
+            hiddenFieldsAt1 = form.items.getAt(1).items.filter('xtype', 'hiddenfield');
+
+            expect(hiddenFieldsAt0.getCount()).toEqual(0);
+            expect(hiddenFieldsAt1.getCount()).toEqual(3);
+        });
+    });
 });
