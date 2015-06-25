@@ -25,13 +25,25 @@ Ext.define('Mayflower.grid.feature.FilterFormController', {
 
     /**
      * Reset filter form values
+     *
+     * @param {String} id
      */
-    onResetFilters: function () {
+    onResetFilters: function (id) {
         var view = this.getView(),
-            store = view.up().getStore();
+            store = view.up().getStore(),
+            form = view.getForm();
 
-        view.getForm().reset();
-        store.clearFilter(true);
+        if (Ext.isString(id)) {
+            formField = form.findField(id);
+
+            if (formField !== null) {
+                formField.reset();
+                store.removeFilter(id, true);
+            }
+        } else {
+            form.reset();
+            store.clearFilter(true);
+        }
     },
 
     /**
