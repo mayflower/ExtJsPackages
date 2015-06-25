@@ -10,8 +10,12 @@
  * The items in the form will appear in the same order as they are defined in the columns.
  * Custom ordering can be provided by using the `filterOption` property `formPosition`.
  *
+ * There is also the `resettable` property (defaults to false), with which you can enable a reset button on the
+ * chosen form field
+ *
  *     filterOption: {
- *         formPosition: 1
+ *         formPosition: 1,
+ *         resettable: true
  *     }
  */
 Ext.define('Mayflower.grid.feature.FilterForm', {
@@ -97,7 +101,8 @@ Ext.define('Mayflower.grid.feature.FilterForm', {
                 allowBlank: true,
                 labelAlign: 'left',
                 labelWidth: 100,
-                msgTarget: 'side'
+                msgTarget: 'side',
+                resettable: false
             },
             dockedItems: me.createFilterFormToolbar()
         };
@@ -201,19 +206,27 @@ Ext.define('Mayflower.grid.feature.FilterForm', {
      */
     addResetTriggerToFormField: function (columns) {
         var me = this,
+            trigger,
             columnObjects = [];
 
         Ext.Array.each(columns, function (column) {
-            columnObjects.push(Ext.Object.merge(column, {
-                triggers: {
-                    resetButton: {
-                        cls: 'filterform-trigger-revert',
-                        handler: function () {
-                            me.form.getController().onResetFilters(this.getName());
+
+            trigger = {};
+            debugger;
+            if (column.resettable === true) {
+
+                trigger = {
+                    triggers: {
+                        resetButton: {
+                            cls: 'filterform-trigger-revert',
+                            handler: function () {
+                                me.form.getController().onResetFilters(this.getName());
+                            }
                         }
                     }
                 }
-            }));
+            }
+            columnObjects.push(Ext.Object.merge(column, trigger));
         });
 
         return columnObjects;
