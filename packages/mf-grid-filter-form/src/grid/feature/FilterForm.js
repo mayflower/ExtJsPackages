@@ -20,7 +20,10 @@
  */
 Ext.define('Mayflower.grid.feature.FilterForm', {
     extend: 'Ext.grid.feature.Feature',
-    requires: [ 'Mayflower.grid.feature.FilterFormController' ],
+    requires: [
+        'Mayflower.grid.feature.FilterFormController',
+        'Ext.layout.container.Column'
+    ],
     alias: 'feature.filterform',
 
     /**
@@ -212,9 +215,8 @@ Ext.define('Mayflower.grid.feature.FilterForm', {
         Ext.Array.each(columns, function (column) {
 
             trigger = {};
-            debugger;
-            if (column.resettable === true) {
 
+            if (column.resettable === true) {
                 trigger = {
                     triggers: {
                         resetButton: {
@@ -224,7 +226,7 @@ Ext.define('Mayflower.grid.feature.FilterForm', {
                             }
                         }
                     }
-                }
+                };
             }
             columnObjects.push(Ext.Object.merge(column, trigger));
         });
