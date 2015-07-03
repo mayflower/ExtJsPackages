@@ -11,7 +11,7 @@ In your project root directory (ExtJsPackages)
     $ php -S localhost:65432
 ```
 
-And open the [Simple Grid Example](http://http://localhost:65432/packages/mf-grid-celltooltip/examples/simple-grid/index.html).
+And open the [Simple Grid Example](http://localhost:65432/packages/mf-grid-celltooltip/examples/simple-grid/index.html).
 
 
 
