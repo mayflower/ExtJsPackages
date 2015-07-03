@@ -1,0 +1,21 @@
+{
+    "name": "mf-grid-celltooltip",
+    "type": "code",
+    "creator": "Mayflower GmbH",
+    "summary": "Tooltip for every cell of a grid",
+    "detailedDescription": "This grid feature adds a tooltip to every cell of the grid.",
+    "version": "1.0.0",
+    "compatVersion": "1.0.0",
+    "format": "1",
+    "slicer": {
+        "js": [
+            {
+                "path": "${package.dir}/sass/example/custom.js",
+                "isWidgetManifest": true
+            }
+        ]
+    },
+    "output": "${package.dir}/build",
+    "local": true,
+    "requires": []
+}
