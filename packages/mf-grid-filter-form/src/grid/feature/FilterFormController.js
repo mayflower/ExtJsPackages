@@ -11,8 +11,8 @@ Ext.define('Mayflower.grid.feature.FilterFormController', {
     onApplyFilters: function () {
         var view = this.getView(),
             store = view.up().getStore(),
-            formValues = view.getForm().getValues(),
-            filters = this.buildFilter(formValues);
+            form = view.getForm(),
+            filters = this.buildFilter(form);
 
         store.clearFilter(true);
 
@@ -49,20 +49,21 @@ Ext.define('Mayflower.grid.feature.FilterFormController', {
     /**
      * Build filters for given form values, as consumed by {@see Ext.store.Store#setFilters Store setFilters} function.
      *
-     * @param {Object} formValues
+     * @param {Ext.form.Basic} form
      * @returns {Function[]} array of filter functions
      *
      * @private
      */
-    buildFilter:  function (formValues) {
-        var filters = [];
+    buildFilter:  function (form) {
+        var filters = [],
+            formFields = form.getFields().items;
 
-        Ext.iterate(formValues, function (key, value) {
-            if (!Ext.isEmpty(value)) {
+        Ext.iterate(formFields, function (key, value) {
+            if (!Ext.isEmpty(key.value)) {
                 filters.push(new Ext.util.Filter({
-                    operator: 'like',
-                    property: key,
-                    value: value
+                    operator: key.operator,
+                    property: key.name,
+                    value: key.value
                 }));
             }
         });

@@ -281,7 +281,8 @@ Ext.define('Mayflower.grid.feature.FilterForm', {
             config = Ext.apply(config, item.filterOption, {
                 fieldLabel: item.text,
                 name: item.dataIndex,
-                stateId: me.title + '-' + item.dataIndex
+                stateId: me.title + '-' + item.dataIndex,
+                operator: 'like'
             });
 
             return config;
