@@ -21,6 +21,13 @@ Ext.define('SimpleGrid.view.grid.RemoteNumberGrid', {
         text: 'Description',
         dataIndex: 'description',
         flex: 1,
+        filterOption: {
+            operator: '<='
+        }
+    }, {
+        text: 'Date',
+        dataIndex: 'date',
+        flex: 1,
         filterOption: {}
     }],
 
