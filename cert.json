@@ -1,0 +1,23 @@
+{
+  "data": {
+    "created": "2015-06-26T12:04:02Z",
+    "email": "info@mayflower.de",
+    "expires": "2020-06-27T00:00:00Z",
+    "name": "Mayflower GmbH",
+    "uuid": "8f193cb8-bf65-46ac-96be-59cc9404a810"
+  },
+  "publicKey": {
+    "algorithm": "RSA",
+    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmd9SQ8fEfIiGEFNvINYCskKINBto3fKrPD1JK+DCaor+RzGjZvcMombJsj1x+p9NvtVY7icavfzx6R+/6CezCY1joqH7WuuXzxmY/WwyvVW3W+lte/E0O6DWNRUO3TW0xbYXVFxnsfIyUTEgG47xccaxQWahkhxQbpT5ypYTU4dk7vksSD7b8SUedOKHRqnQbPvM6EEi2/r9K0nsUv7Gz75+W1gM8bNB6nuwqiTJ3ec5ctqX7ZMX6xOCoDfvWEpZqDMdc7dr/rJvkN2HiIeZtLvH3XEQlmNJ7kcerru/dk36m4mxlm6ajNLzqnXvnbGpR5jkBN+xCcwTcho/EmmX8QIDAQAB"
+  },
+  "signatures": [
+    {
+      "name": "Mayflower GmbH",
+      "uuid": "8f193cb8-bf65-46ac-96be-59cc9404a810",
+      "created": "2015-06-26T12:04:04Z",
+      "algorithm": "SHA1withRSA",
+      "nonce": "jab+8DfUIMU\u003d",
+      "signature": "QKWyaYXle39611TXgK1DmQIJnOVF7oZ9ekMCz5e43kYpU6cerLyuYM28VoBpu9M4dG0OsyeheY/hjTf1CncO8zRbTIrF+rNERY06hLE/mc5paUmnDSQ7H35ruGOGDwmQ+OIy8qwmKj0H6B2WSnnEmopBYKem3rbVnRfk71vLdLg2RpWjbEdaMXlCf13ZNn53ythvSu96tuXtcf+iDWZINvae/tyaGXjQAvdOEhIodYlh4bQxUGZxjmxQJoy72albJ3jJzjx8o2bPm4f0AjD18QMufg/TDWrcbbV1/epR01/1UlXIL6BALPYopU4wRV402lHRFyxaBaLDHCGZcKHD+A\u003d\u003d"
+    }
+  ]
+}

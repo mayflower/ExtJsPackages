@@ -1,0 +1,28 @@
+{
+  "name": "mf-grid-celltooltip",
+  "format": "1",
+  "version": "1.0.0",
+  "creator": "Mayflower GmbH",
+  "summary": "Tooltip for every cell of a grid",
+  "detailedDescription": "This grid feature adds a tooltip to every cell of the grid.",
+  "type": "code",
+  "signatures": [
+    {
+      "name": "Mayflower GmbH",
+      "uuid": "8f193cb8-bf65-46ac-96be-59cc9404a810",
+      "created": "2015-07-10T10:30:50Z",
+      "algorithm": "SHA1withRSA",
+      "nonce": "jJWTDqqhw2w\u003d",
+      "signature": "HEIyyetzBnkOe3lelPAJApqz+pXLcCjPax8FJFRVa2L6M5Y4KAO+fdxXY/r/dhioAlkK1RtWJktC9g4WZEW0wmCrWI8+1v5WsG3yELlOx5K30qFkffKZnov4T3wCrJVGuzFTZdjEngnt25MvhMImfSn+laemzMO9gz/9zRtcR36nVOV6LoDKtBFQKrEJb9QaiWtEPudWM+UO0XMgNtMMgXeTD3AjPQcNMhQY71pnG3z2vuja5tuG6OjG4fIT8CuVHXP/3rw0Y8ISbNUJekrAJr0Ta/qFCyqUfjE+PIncD7gTbELA5cHDbtL4lkjL2yLCHtejDAy8NVv9TlGLutbWTw\u003d\u003d"
+    }
+  ],
+  "slicer": {
+    "js": [
+      {
+        "path": "${package.dir}/sass/example/custom.js",
+        "isWidgetManifest": true
+      }
+    ]
+  },
+  "output": "${package.dir}/build"
+}
