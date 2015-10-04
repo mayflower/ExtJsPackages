@@ -8,15 +8,15 @@
   },
   "readmeFilename": "",
   "author": "Mayflower GmbH",
-  "license": "ISC",
+  "license": "GPL-3.0",
   "devDependencies": {
     "jscs": "^1.12.0",
     "jasmine-core": "^2.2.0",
-    "karma": "^0.12.31",
-    "karma-chrome-launcher": "^0.1.7",
+    "karma": "^0.13.10",
+    "karma-chrome-launcher": "^0.2.0",
     "karma-firefox-launcher": "^0.1.4",
     "karma-jasmine": "^0.3.5",
-    "karma-phantomjs-launcher": "^0.1.4",
-    "karma-junit-reporter": "^0.2.2"
+    "karma-phantomjs-launcher": "^0.2.1",
+    "karma-junit-reporter": "^0.3.7"
   }
 }
