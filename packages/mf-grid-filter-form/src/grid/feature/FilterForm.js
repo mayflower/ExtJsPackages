@@ -353,7 +353,7 @@ Ext.define('Mayflower.grid.feature.FilterForm', {
         columnElements = [];
 
         for (var field = 1; field <= displayedFields.length; field ++) {
-            columnElements.push(displayedFields[field-1]);
+            columnElements.push(displayedFields[field - 1]);
 
             if (field % columnElementsNumber === 0 && formColumnItems.length < me.columns) {
                 formColumnItems.push(columnElements);
