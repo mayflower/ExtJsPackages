@@ -7,9 +7,9 @@ Ext.application({
     name: 'SimpleGrid',
 
     extend: 'SimpleGrid.Application',
-    
+
     autoCreateViewport: 'SimpleGrid.view.main.Main'
-	
+
     //-------------------------------------------------------------------------
     // Most customizations should be made to SimpleGrid.Application. If you need to
     // customize this file, doing so below this section reduces the likelihood

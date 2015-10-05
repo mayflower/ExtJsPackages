@@ -5,13 +5,13 @@
  */
 Ext.define('simpleGrid.Application', {
     extend: 'Ext.app.Application',
-    
+
     name: 'simpleGrid',
 
     stores: [
         // TODO: add global / shared stores here
     ],
-    
+
     launch: function () {
         // TODO - Launch the application
     }
