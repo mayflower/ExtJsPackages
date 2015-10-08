@@ -318,6 +318,80 @@ describe('Mayflower grid filter form test suite', function () {
                 expect(feature.getColumnsSortedByFormPosition(data.filterItems)).toEqual(data.sortedItems);
             });
         });
+
+    });
+
+    describe('Helper method tests', function () {
+
+        describe('splitIntoColumns', function () {
+            beforeEach(function () {
+                feature = Ext.create('Mayflower.grid.feature.FilterForm', {columns: 2});
+            });
+            it ('should split 2|1 columnElements for 3 columnElements in 2 columns', function () {
+                var columns = [{
+                    text: 'Id',
+                    dataIndex: 'id',
+                    filterOption: {}
+                }, {
+                    text: 'Name',
+                    dataIndex: 'name',
+                    filterOption: {}
+                }, {
+                    text: 'Description',
+                    dataIndex: 'description'
+                }];
+            });
+
+            it('should split 4|4|3|3 columnElements for 14 columnElements in 4 columns', function () {
+                feature = Ext.create('Mayflower.grid.feature.FilterForm', {columns: 4});
+                var columns = [{
+                    text: 'Id',
+                    dataIndex: 'id',
+                    filterOption: {}
+                }, {
+                    text: 'Name',
+                    dataIndex: 'name',
+                    filterOption: {}
+                }, {
+                    text: 'Test 1',
+                    dataIndex: 'test1'
+                },{
+                    text: 'Test 2',
+                    dataIndex: 'test2'
+                },{
+                    text: 'Test 3',
+                    dataIndex: 'test3'
+                },{
+                    text: 'Test 4',
+                    dataIndex: 'test4'
+                },{
+                    text: 'Test 5',
+                    dataIndex: 'test5'
+                },{
+                    text: 'Test 6',
+                    dataIndex: 'test6'
+                },{
+                    text: 'Test 7',
+                    dataIndex: 'test7'
+                },{
+                    text: 'Test 8',
+                    dataIndex: 'test8'
+                },{
+                    text: 'Test 9',
+                    dataIndex: 'test9'
+                },{
+                    text: 'Test 10',
+                    dataIndex: 'test10'
+                },{
+                    text: 'Test 11',
+                    dataIndex: 'test11'
+                },{
+                    text: 'Test 12',
+                    dataIndex: 'test12'
+                }
+                ];
+            });
+        });
     });
 
     describe('Test the filtered grid with custom order', function () {
@@ -432,8 +506,38 @@ describe('Mayflower grid filter form test suite', function () {
             var form = grid.down('form');
 
             expect(form.items.length).toEqual(2);
-            expect(form.items.getAt(0).items.length).toEqual(1);
-            expect(form.items.getAt(1).items.length).toEqual(2);
+            expect(form.items.getAt(0).items.length).toEqual(2);
+            expect(form.items.getAt(1).items.length).toEqual(1);
+        });
+
+        describe('Test the formPosition sorting', function () {
+            columns = [{
+                text: 'Id',
+                dataIndex: 'id',
+                filterOption: {
+                    formPosition: 0
+                }
+            }, {
+                text: 'Name',
+                dataIndex: 'name',
+                filterOption: {
+                    formPosition: 1
+                }
+            }, {
+                text: 'Description',
+                dataIndex: 'description',
+                filterOption: {
+                    formPosition: 2
+                }
+            }];
+
+            it('should respect the formPosition sorting', function () {
+                var form = grid.down('form');
+                console.log(form.items.getAt(0).items.get('description'));
+                expect(form.items.items[0].items.items[0].initialConfig.fieldLabel).toEqual(columns[0].text);
+                expect(form.items.items[0].items.items[1].initialConfig.fieldLabel).toEqual(columns[1].text);
+                expect(form.items.items[1].items.items[0].initialConfig.fieldLabel).toEqual(columns[2].text);
+            });
         });
     });
 
@@ -628,10 +732,10 @@ describe('Mayflower grid filter form test suite', function () {
             var form = grid.down('form');
 
             expect(form.items.length).toEqual(4);
-            expect(form.items.getAt(0).items.length).toEqual(2);
-            expect(form.items.getAt(1).items.length).toEqual(2);
+            expect(form.items.getAt(0).items.length).toEqual(3);
+            expect(form.items.getAt(1).items.length).toEqual(3);
             expect(form.items.getAt(2).items.length).toEqual(2);
-            expect(form.items.getAt(3).items.length).toEqual(4);
+            expect(form.items.getAt(3).items.length).toEqual(2);
         });
     });
 
@@ -774,8 +878,8 @@ describe('Mayflower grid filter form test suite', function () {
                 hiddenFieldsAt1;
 
             expect(form.items.length).toEqual(2);
-            expect(form.items.getAt(0).items.length).toEqual(3);
-            expect(form.items.getAt(1).items.length).toEqual(7);
+            expect(form.items.getAt(0).items.length).toEqual(4);
+            expect(form.items.getAt(1).items.length).toEqual(6);
 
             hiddenFieldsAt0 = form.items.getAt(0).items.filter('xtype', 'hiddenfield');
             hiddenFieldsAt1 = form.items.getAt(1).items.filter('xtype', 'hiddenfield');

@@ -339,31 +339,13 @@ Ext.define('Mayflower.grid.feature.FilterForm', {
     addColumnItems: function (filterItems) {
         var me = this,
             formColumnItems,
-            elements,
-            columnElementsNumber,
-            columnElements,
             hiddenFields,
             displayedFields;
 
-        formColumnItems = [];
         displayedFields = me.getDisplayedFilterElements(filterItems);
         hiddenFields = me.getHiddenFilterElements(filterItems);
-        elements = displayedFields.length;
-        columnElementsNumber = parseInt(elements / me.columns, 10);
-        columnElements = [];
 
-        for (var field = 1; field <= displayedFields.length; field ++) {
-            columnElements.push(displayedFields[field - 1]);
-
-            if (field % columnElementsNumber === 0 && formColumnItems.length < me.columns) {
-                formColumnItems.push(columnElements);
-                columnElements = [];
-            }
-        }
-
-        if (columnElements.length > 0) {
-            formColumnItems = me.addElementsToLastColumn(formColumnItems, columnElements);
-        }
+        formColumnItems = me.splitIntoColumns(displayedFields);
 
         if (hiddenFields.length > 0) {
             formColumnItems = me.addElementsToLastColumn(formColumnItems, hiddenFields);
@@ -413,7 +395,15 @@ Ext.define('Mayflower.grid.feature.FilterForm', {
     },
 
     /**
-     * Adds elements to the last column
+     * Adds elements to the column next to the longest column
+     *
+     * given the columns:
+     *
+     * | a | b | c |
+     * | 1 | 2 | 3 |
+     * | 4 |   |   |
+     *
+     * we want the last elements to be added to column b
      *
      * @param {Array} allColumnElements
      * @param {Array} elementsToAdd
@@ -426,12 +416,39 @@ Ext.define('Mayflower.grid.feature.FilterForm', {
         if (allColumnElements.length > 0) {
             for (var singleElement = 0; singleElement < elementsToAdd.length; singleElement++) {
                 allColumnElements[allColumnElements.length - 1].push(elementsToAdd[singleElement]);
-
             }
         } else {
             allColumnElements.push(elementsToAdd);
         }
 
         return allColumnElements;
+    },
+
+    /**
+     * split the displayItems into the correct chunks for the columns
+     *
+     * respects the sorting through formPosition
+     *
+     * @param {Array} allColumnElements
+     * @returns {Array}
+     */
+    splitIntoColumns: function (allColumnElements) {
+        var me = this,
+            formColumnItems = [],
+            rest,
+            chunkSize;
+
+        rest = allColumnElements.length % me.columns;
+        chunkSize = Math.floor(allColumnElements.length / me.columns);
+
+        for (var columnIndex = 0; columnIndex < me.columns; columnIndex++) {
+            if (columnIndex < rest) {
+                formColumnItems.push(allColumnElements.splice(0, chunkSize + 1));
+            } else {
+                formColumnItems.push(allColumnElements.splice(0, chunkSize));
+            }
+        }
+
+        return formColumnItems;
     }
 });
