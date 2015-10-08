@@ -413,7 +413,15 @@ Ext.define('Mayflower.grid.feature.FilterForm', {
     },
 
     /**
-     * Adds elements to the last column
+     * Adds elements to the column next to the longest column
+     *
+     * given the columns:
+     *
+     * | a | b | c |
+     * | 1 | 2 | 3 |
+     * | 4 |   |   |
+     *
+     * we want the last elements to be added to column b
      *
      * @param {Array} allColumnElements
      * @param {Array} elementsToAdd
@@ -423,9 +431,16 @@ Ext.define('Mayflower.grid.feature.FilterForm', {
      * @private
      */
     addElementsToLastColumn: function (allColumnElements, elementsToAdd) {
+        var me = this;
         if (allColumnElements.length > 0) {
             for (var singleElement = 0; singleElement < elementsToAdd.length; singleElement++) {
-                allColumnElements[allColumnElements.length - 1].push(elementsToAdd[singleElement]);
+                var longestColumn = me.getLongestColumn(allColumnElements);
+                if (longestColumn > 0) {
+                    allColumnElements[longestColumn + 1].push(elementsToAdd[singleElement]);
+                } else {
+                    allColumnElements[longestColumn].push(elementsToAdd[singleElement]);
+                }
+
 
             }
         } else {
@@ -433,5 +448,21 @@ Ext.define('Mayflower.grid.feature.FilterForm', {
         }
 
         return allColumnElements;
+    },
+
+    /**
+     *
+     * @param {Array} allColumnElements
+     * @returns {number}
+     */
+    getLongestColumn: function (allColumnElements) {
+
+        var longestColumn = Ext.Array.max(allColumnElements, function (a, b) {
+            if (a.length < b.length) {
+                return -1;
+            }
+        });
+
+        return allColumnElements.indexOf(longestColumn);
     }
 });
