@@ -434,14 +434,7 @@ Ext.define('Mayflower.grid.feature.FilterForm', {
         var me = this;
         if (allColumnElements.length > 0) {
             for (var singleElement = 0; singleElement < elementsToAdd.length; singleElement++) {
-                var longestColumn = me.getLongestColumn(allColumnElements);
-                if (longestColumn > 0) {
-                    allColumnElements[longestColumn + 1].push(elementsToAdd[singleElement]);
-                } else {
-                    allColumnElements[longestColumn].push(elementsToAdd[singleElement]);
-                }
-
-
+                allColumnElements[me.getInsertColumn(allColumnElements)].push(elementsToAdd[singleElement]);
             }
         } else {
             allColumnElements.push(elementsToAdd);
@@ -452,17 +445,28 @@ Ext.define('Mayflower.grid.feature.FilterForm', {
 
     /**
      *
+     * returns the column in which the next element should be inserted
+     *
      * @param {Array} allColumnElements
      * @returns {number}
      */
-    getLongestColumn: function (allColumnElements) {
+    getInsertColumn: function (allColumnElements) {
+        var maxLength, last = 0, nextIndex = 0;
 
-        var longestColumn = Ext.Array.max(allColumnElements, function (a, b) {
-            if (a.length < b.length) {
-                return -1;
+        maxLength = Ext.Array.max(Ext.Array.pluck(allColumnElements, 'length'));
+
+        Ext.Array.forEach(allColumnElements, function (element, index) {
+            if (element.length === maxLength) {
+                last = index;
             }
         });
 
-        return allColumnElements.indexOf(longestColumn);
+        if (last === allColumnElements.length - 1) {
+            nextIndex = 0;
+        } else {
+            nextIndex = last + 1;
+        }
+
+        return nextIndex;
     }
 });

@@ -318,6 +318,23 @@ describe('Mayflower grid filter form test suite', function () {
                 expect(feature.getColumnsSortedByFormPosition(data.filterItems)).toEqual(data.sortedItems);
             });
         });
+
+        describe('Helper method tests', function() {
+            describe('getInsertColumn', function() {
+                it ('should return the first column if longest column is last', function() {
+                    var fixture = [[1,2,3], [1,2,3], [1,2,3,4]];
+                    expect(feature.getInsertColumn(fixture)).toEqual(0);
+                });
+                it ('should return the longest element', function() {
+                    var fixture = [[1,2,3,4], [1,2,3], [1,2,3]];
+                    expect(feature.getInsertColumn(fixture)).toEqual(1);
+                });
+                it('should return the second element for 2 same height elementts', function () {
+                    var fixture = [[1,2,3], [1,2,3], [1,2]];
+                    expect(feature.getInsertColumn(fixture)).toEqual(2);
+                });
+            });
+        });
     });
 
     describe('Test the filtered grid with custom order', function () {
@@ -628,8 +645,8 @@ describe('Mayflower grid filter form test suite', function () {
             var form = grid.down('form');
 
             expect(form.items.length).toEqual(4);
-            expect(form.items.getAt(0).items.length).toEqual(4);
-            expect(form.items.getAt(1).items.length).toEqual(2);
+            expect(form.items.getAt(0).items.length).toEqual(3);
+            expect(form.items.getAt(1).items.length).toEqual(3);
             expect(form.items.getAt(2).items.length).toEqual(2);
             expect(form.items.getAt(3).items.length).toEqual(2);
         });
@@ -774,14 +791,14 @@ describe('Mayflower grid filter form test suite', function () {
                 hiddenFieldsAt1;
 
             expect(form.items.length).toEqual(2);
-            expect(form.items.getAt(0).items.length).toEqual(7);
-            expect(form.items.getAt(1).items.length).toEqual(3);
+            expect(form.items.getAt(0).items.length).toEqual(5);
+            expect(form.items.getAt(1).items.length).toEqual(5);
 
             hiddenFieldsAt0 = form.items.getAt(0).items.filter('xtype', 'hiddenfield');
             hiddenFieldsAt1 = form.items.getAt(1).items.filter('xtype', 'hiddenfield');
 
-            expect(hiddenFieldsAt0.getCount()).toEqual(3);
-            expect(hiddenFieldsAt1.getCount()).toEqual(0);
+            expect(hiddenFieldsAt0.getCount()).toEqual(1);
+            expect(hiddenFieldsAt1.getCount()).toEqual(2);
         });
     });
 });
