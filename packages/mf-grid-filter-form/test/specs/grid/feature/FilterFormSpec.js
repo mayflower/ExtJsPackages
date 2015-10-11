@@ -321,10 +321,10 @@ describe('Mayflower grid filter form test suite', function () {
 
     });
 
-    describe('Helper method tests', function() {
+    describe('Helper method tests', function () {
 
-        describe('splitIntoColumns', function() {
-            beforeEach(function() {
+        describe('splitIntoColumns', function () {
+            beforeEach(function () {
                 feature = Ext.create('Mayflower.grid.feature.FilterForm', {columns: 2});
             });
             it ('should split 2|1 columnElements for 3 columnElements in 2 columns', function () {
@@ -510,7 +510,7 @@ describe('Mayflower grid filter form test suite', function () {
             expect(form.items.getAt(1).items.length).toEqual(1);
         });
 
-        describe('Test the formPosition sorting', function() {
+        describe('Test the formPosition sorting', function () {
             columns = [{
                 text: 'Id',
                 dataIndex: 'id',
