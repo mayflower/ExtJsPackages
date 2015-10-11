@@ -531,7 +531,7 @@ describe('Mayflower grid filter form test suite', function () {
                 }
             }];
 
-            xit('should respect the formPosition sorting', function () {
+            it('should respect the formPosition sorting', function () {
                 var form = grid.down('form');
                 console.log(form.items.getAt(0).items.get('description'));
                 expect(form.items.items[0].items.items[0].initialConfig.fieldLabel).toEqual(columns[0].text);
