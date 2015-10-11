@@ -339,31 +339,13 @@ Ext.define('Mayflower.grid.feature.FilterForm', {
     addColumnItems: function (filterItems) {
         var me = this,
             formColumnItems,
-            elements,
-            columnElementsNumber,
-            columnElements,
             hiddenFields,
             displayedFields;
 
-        formColumnItems = [];
         displayedFields = me.getDisplayedFilterElements(filterItems);
         hiddenFields = me.getHiddenFilterElements(filterItems);
-        elements = displayedFields.length;
-        columnElementsNumber = parseInt(elements / me.columns, 10);
-        columnElements = [];
 
-        for (var field = 1; field <= displayedFields.length; field ++) {
-            columnElements.push(displayedFields[field - 1]);
-
-            if (field % columnElementsNumber === 0 && formColumnItems.length < me.columns) {
-                formColumnItems.push(columnElements);
-                columnElements = [];
-            }
-        }
-
-        if (columnElements.length > 0) {
-            formColumnItems = me.addElementsToLastColumn(formColumnItems, columnElements);
-        }
+        formColumnItems = me.splitIntoColumns(displayedFields);
 
         if (hiddenFields.length > 0) {
             formColumnItems = me.addElementsToLastColumn(formColumnItems, hiddenFields);
@@ -431,10 +413,9 @@ Ext.define('Mayflower.grid.feature.FilterForm', {
      * @private
      */
     addElementsToLastColumn: function (allColumnElements, elementsToAdd) {
-        var me = this;
         if (allColumnElements.length > 0) {
             for (var singleElement = 0; singleElement < elementsToAdd.length; singleElement++) {
-                allColumnElements[me.getInsertColumn(allColumnElements)].push(elementsToAdd[singleElement]);
+                allColumnElements[allColumnElements.length - 1].push(elementsToAdd[singleElement]);
             }
         } else {
             allColumnElements.push(elementsToAdd);
@@ -444,29 +425,30 @@ Ext.define('Mayflower.grid.feature.FilterForm', {
     },
 
     /**
+     * split the displayItems into the correct chunks for the columns
      *
-     * returns the column in which the next element should be inserted
+     * respects the sorting through formPosition
      *
      * @param {Array} allColumnElements
-     * @returns {number}
+     * @returns {Array}
      */
-    getInsertColumn: function (allColumnElements) {
-        var maxLength, last = 0, nextIndex = 0;
+    splitIntoColumns: function (allColumnElements) {
+        var me = this,
+            formColumnItems = [],
+            rest,
+            chunkSize;
 
-        maxLength = Ext.Array.max(Ext.Array.pluck(allColumnElements, 'length'));
+        rest = allColumnElements.length % me.columns;
+        chunkSize = Math.floor(allColumnElements.length / me.columns);
 
-        Ext.Array.forEach(allColumnElements, function (element, index) {
-            if (element.length === maxLength) {
-                last = index;
+        for (var columnIndex = 0; columnIndex < me.columns; columnIndex++) {
+            if (columnIndex < rest) {
+                formColumnItems.push(allColumnElements.splice(0, chunkSize + 1));
+            } else {
+                formColumnItems.push(allColumnElements.splice(0, chunkSize));
             }
-        });
-
-        if (last === allColumnElements.length - 1) {
-            nextIndex = 0;
-        } else {
-            nextIndex = last + 1;
         }
 
-        return nextIndex;
+        return formColumnItems;
     }
 });
