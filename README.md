@@ -1,4 +1,4 @@
-# ExtJsPackages <a href="https://travis-ci.org/mayflower/ExtJsPackages/"><img src="https://api.travis-ci.org/mayflower/ExtJsPackages.svg" alt="Build Status" style="max-width:100%;"></a> [![devDependency Status](https://david-dm.org/mayflower/ExtJsPackages/dev-status.svg)](https://david-dm.org/mayflower/ExtJsPackages#info=devDependencies)
+# ExtJsPackages <a href="https://travis-ci.org/mayflower/ExtJsPackages/"><img src="https://travis-ci.org/mayflower/ExtJsPackages.svg?branch=master" alt="Build Status" style="max-width:100%;"></a> [![devDependency Status](https://david-dm.org/mayflower/ExtJsPackages/dev-status.svg)](https://david-dm.org/mayflower/ExtJsPackages#info=devDependencies)
 ExtJS Packages by Mayflower
 
 ## Using these packages in your application
