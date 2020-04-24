@@ -14,7 +14,9 @@ describe('Mayflower grid filter form test suite', function () {
     columns = [{
         text: 'Id',
         dataIndex: 'id',
-        filterOption: {}
+        filterOption: {
+            operator: '<='
+        }
     }, {
         text: 'Name',
         dataIndex: 'name',
@@ -67,9 +69,12 @@ describe('Mayflower grid filter form test suite', function () {
 
             expect(filterForm.items.getAt(0).xtype).toEqual('textfield');
             expect(filterForm.items.getAt(0).getFieldLabel()).toEqual('Id');
+            expect(filterForm.items.getAt(0).operator).toEqual('<=');
+
 
             expect(filterForm.items.getAt(1).xtype).toEqual('textfield');
             expect(filterForm.items.getAt(1).getFieldLabel()).toEqual('Name');
+            expect(filterForm.items.getAt(1).operator).toEqual('like');
 
             expect(filterForm.getDockedItems().length).toEqual(1);
             expect(filterForm.getDockedItems()[0].xtype).toEqual('toolbar');
